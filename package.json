@@ -1,0 +1,16 @@
+{
+  "repository": "github:wkndprgmr/autoload",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "fmt": "prettier --write .",
+    "lint": "./scripts/lint.js",
+    "test": "ava -v",
+    "test-coverage": "nyc npm test"
+  },
+  "devDependencies": {
+    "ava": "^3.13.0",
+    "jshint": "^2.12.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.0"
+  }
+}

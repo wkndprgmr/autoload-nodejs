@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  node:
+    image: node:12
+    volumes:
+      - .:/autoload
+    restart: "no"
+    working_dir: /autoload
+    user: "${DOCKER_USER}"
