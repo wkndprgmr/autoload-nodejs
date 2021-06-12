@@ -3,33 +3,12 @@
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
-console.log("==> Linting files...");
-
-Promise.all([prettier(process.argv.slice(2)), jshint(process.argv.slice(2))])
-  .then(([prettier, jshint]) => {
-    sendToStderr(prettier.stderr);
-    sendToStderr(jshint.stderr);
-
-    if (prettier.code > 0 || jshint.code > 0) {
-      console.log("==> Linting failed");
-      return 1;
-    }
-
-    console.log("==> Code looks good...let's hope it works");
-    return 0;
-  })
-  .then((exitCode) => process.exit(exitCode))
-  .catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
-
-function sendToStderr(stderr) {
-  if (!stderr) {
-    return;
+function filterFiles(regex, files, defaultFiles) {
+  if (files.length === 0) {
+    return defaultFiles;
   }
 
-  process.stderr.write(stderr);
+  return files.filter((f) => f.match(regex));
 }
 
 function prettier(files = []) {
@@ -59,10 +38,31 @@ function jshint(files = []) {
   return exec(cmd).catch((err) => err);
 }
 
-function filterFiles(regex, files, defaultFiles) {
-  if (files.length === 0) {
-    return defaultFiles;
+function sendToStderr(stderr) {
+  if (!stderr) {
+    return;
   }
 
-  return files.filter((f) => f.match(regex));
+  process.stderr.write(stderr);
 }
+
+console.log("==> Linting files...");
+
+Promise.all([prettier(process.argv.slice(2)), jshint(process.argv.slice(2))])
+  .then(([prettier, jshint]) => {
+    sendToStderr(prettier.stderr);
+    sendToStderr(jshint.stderr);
+
+    if (prettier.code > 0 || jshint.code > 0) {
+      console.log("==> Linting failed");
+      return 1;
+    }
+
+    console.log("==> Code looks good...let's hope it works");
+    return 0;
+  })
+  .then((exitCode) => process.exit(exitCode))
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
