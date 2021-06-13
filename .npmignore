@@ -1,0 +1,11 @@
+.githooks/
+.nyc_output/
+bin/
+examples/
+scripts/
+tests/
+.jshintignore
+.jshintrc
+.prettierignore
+docker-compose.yml
+src/jshint-reporter.js
