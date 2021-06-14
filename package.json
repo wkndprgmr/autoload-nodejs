@@ -5,12 +5,12 @@
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wkndprgmr/autoload.git"
+    "url": "git+https://github.com/wkndprgmr/autoload-nodejs.git"
   },
   "bugs": {
-    "url": "https://github.com/wkndprgmr/autoload/issues"
+    "url": "https://github.com/wkndprgmr/autoload-nodejs/issues"
   },
-  "homepage": "https://github.com/wkndprgmr/autoload#readme",
+  "homepage": "https://github.com/wkndprgmr/autoload-nodejs#readme",
   "license": "AGPL-3.0",
   "main": "src/index.js",
   "scripts": {
