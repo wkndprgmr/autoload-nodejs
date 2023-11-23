@@ -6,7 +6,7 @@ function shouldLoadFile({ ext, name }) {
     return false;
   }
 
-  if (ext !== ".js") {
+  if (ext !== ".js" && ext !== ".mjs") {
     return false;
   }
 
@@ -18,11 +18,14 @@ module.exports = (dirpath) => {
     const files = fs.readdirSync(dirpath);
     const modules = files.reduce((m, f) => {
       const file = path.parse(f);
-      if (shouldLoadFile(file)) {
+      if (shouldLoadFile(file) && file.ext === ".js") {
+        m[file.name] = require(path.join(dirpath, file.base));
+      } else if (shouldLoadFile(file) && file.ext === ".mjs") {
         m[file.name] = require(path.join(dirpath, file.base));
       }
       return m;
     }, {});
+    console.log({ modules });
     return modules;
   } catch (err) {
     throw new Error(`autoload - couldn't read files in ${dirpath}, "${err}"`);
